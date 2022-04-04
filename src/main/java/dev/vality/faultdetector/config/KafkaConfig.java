@@ -14,6 +14,7 @@ import org.apache.kafka.common.config.SslConfigs;
 import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -29,17 +30,24 @@ public class KafkaConfig {
 
     private static final String EARLIEST = "earliest";
 
+    @Value("${kafka.bootstrap-servers}")
+    private String servers;
+
     @Bean
     public ProducerFactory<String, ServiceOperation> producerFactory(KafkaConsumerProperties kafkaConsumerProperties,
                                                                      KafkaSslProperties kafkaSslProperties) {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConsumerProperties.getBootstrapServers());
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
         configProps.put(ProducerConfig.CLIENT_ID_CONFIG, kafkaConsumerProperties.getClientId());
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ServiceOperationSerializer.class);
+        configProps.put(ProducerConfig.RECONNECT_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getReconnectBackoffMs());
+        configProps.put(ProducerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
+                kafkaConsumerProperties.getReconnectBackoffMaxMs());
+        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
 
-        if (kafkaSslProperties.isEnable()) {
+        if (kafkaSslProperties.isEnabled()) {
             addSslKafkaProps(configProps, kafkaSslProperties);
         }
 
@@ -58,7 +66,7 @@ public class KafkaConfig {
             KafkaSslProperties kafkaSslProperties
     ) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConsumerProperties.getBootstrapServers());
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
         props.put(ConsumerConfig.CLIENT_ID_CONFIG, kafkaConsumerProperties.getClientId());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaConsumerProperties.getGroupId());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -68,7 +76,12 @@ public class KafkaConfig {
         props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, kafkaConsumerProperties.getFetchMinBytes());
         props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, kafkaConsumerProperties.getFetchMaxWaitMs());
 
-        if (kafkaSslProperties.isEnable()) {
+        props.put(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getReconnectBackoffMs());
+        props.put(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
+                kafkaConsumerProperties.getReconnectBackoffMaxMs());
+        props.put(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
+
+        if (kafkaSslProperties.isEnabled()) {
             addSslKafkaProps(props, kafkaSslProperties);
         }
 

@@ -12,6 +12,6 @@ public class KafkaSslProperties {
     private KafkaKeyProperties truststore;
     private KafkaKeyProperties keystore;
     private KafkaKeyProperties key;
-    private boolean enable;
+    private boolean enabled;
 
 }

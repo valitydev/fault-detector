@@ -1,16 +1,18 @@
 package dev.vality.faultdetector.integration;
 
 import dev.vality.damsel.fault_detector.ServiceConfig;
+import dev.vality.faultdetector.config.KafkaSpringBootTest;
 import dev.vality.faultdetector.data.ServiceOperation;
 import dev.vality.faultdetector.data.ServiceOperations;
 import dev.vality.faultdetector.handlers.Handler;
 import dev.vality.faultdetector.services.FaultDetectorService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
-public class KafkaIntegrationTest extends AbstractIntegrationTest {
+@KafkaSpringBootTest
+public class KafkaIntegrationTest {
 
     @Autowired
     private Handler<ServiceOperation> sendOperationHandler;
