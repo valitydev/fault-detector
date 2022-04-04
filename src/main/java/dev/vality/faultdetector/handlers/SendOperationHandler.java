@@ -14,7 +14,7 @@ public class SendOperationHandler implements Handler<ServiceOperation> {
     @Autowired
     private KafkaTemplate<String, ServiceOperation> kafkaTemplate;
 
-    @Value("${kafka.topic}")
+    @Value("${kafka.consumer.topic}")
     private String topicName;
 
     @Override

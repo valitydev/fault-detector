@@ -22,7 +22,7 @@ public class OperationListener {
 
     private final Map<String, ServiceSettings> serviceSettingsMap;
 
-    @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${kafka.consumer.topic}", containerFactory = "kafkaListenerContainerFactory")
     public void listen(List<ServiceOperation> serviceOperationsList) {
         log.trace("Number of operations received from topic: {}", serviceOperationsList.size());
 

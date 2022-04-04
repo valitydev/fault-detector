@@ -7,7 +7,6 @@ import dev.vality.faultdetector.handlers.Handler;
 import dev.vality.faultdetector.services.FaultDetectorService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,9 +20,6 @@ public class KafkaIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private FaultDetectorService faultDetectorService;
-
-    @Value("${kafka.topic}")
-    private String topicName;
 
     @Test
     public void kafkaTest() throws Exception {
