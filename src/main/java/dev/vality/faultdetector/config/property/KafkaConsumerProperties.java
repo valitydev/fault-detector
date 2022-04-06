@@ -12,7 +12,6 @@ public class KafkaConsumerProperties {
     private String clientId;
     private String groupId;
     private String topic;
-    private String pollTimeout;
     private String maxPoolRecords;
     private String fetchMinBytes;
     private String fetchMaxWaitMs;

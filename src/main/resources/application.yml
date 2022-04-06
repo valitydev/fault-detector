@@ -24,7 +24,6 @@ kafka:
     topic: "fault-detector"
     client-id: "fault-detector"
     group-id: "fault-detector"
-    poll-timeout: 5000
     max-pool-records: 300
     fetch-min-bytes: 1024
     fetch-max-wait-ms: 1000
