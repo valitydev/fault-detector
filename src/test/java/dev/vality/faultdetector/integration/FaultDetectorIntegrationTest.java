@@ -2,11 +2,12 @@ package dev.vality.faultdetector.integration;
 
 import dev.vality.damsel.fault_detector.Error;
 import dev.vality.damsel.fault_detector.*;
+import dev.vality.faultdetector.config.KafkaSpringBootTest;
 import dev.vality.faultdetector.handlers.Handler;
 import dev.vality.faultdetector.services.FaultDetectorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.ParseException;
@@ -19,7 +20,8 @@ import static dev.vality.faultdetector.data.FaultDetectorData.getStartOperation;
 import static org.junit.Assert.assertEquals;
 
 @Slf4j
-public class FaultDetectorIntegrationTest extends AbstractIntegrationTest {
+@KafkaSpringBootTest
+public class FaultDetectorIntegrationTest {
 
     @Autowired
     private FaultDetectorService faultDetectorService;
@@ -45,7 +47,7 @@ public class FaultDetectorIntegrationTest extends AbstractIntegrationTest {
 
         sendErrorOperations(serviceId, serviceConfig, startOperations, errorOperationsCount);
         sendSuccessFinishOperations(serviceId, serviceConfig, startOperations, successOperationsCount);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         calculatePreAggregatesHandler.handle(serviceId);
 
         Thread.sleep(2000);

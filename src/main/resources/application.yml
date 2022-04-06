@@ -19,17 +19,20 @@ operations:
   metricsInitialDelayPeriod: 5000
 
 kafka:
-  bootstrap:
-    servers: "localhost:9092"
-  topic: "fault-detector"
-  client.id: "fault-detector"
-  group.id: "fault-detector"
-  poll.timeout: 5000
-  max-pool-records: 300
-  fetch-min-bytes: 1024
-  fetch-max-wait-ms: 1000
+  bootstrap-servers: "localhost:29092"
+  consumer:
+    topic: "fault-detector"
+    client-id: "fault-detector"
+    group-id: "fault-detector"
+    max-pool-records: 300
+    fetch-min-bytes: 1024
+    fetch-max-wait-ms: 1000
+    concurrency: 1
+    reconnect-backoff-ms: 15000
+    reconnect-backoff-max-ms: 30000
+    retry-backoff-ms: 1000
   ssl:
-    enable: false
+    enabled: false
     truststore:
       location-config: "src/main/resources/cert/truststore.p12"
       password-config: "kenny12"
@@ -40,8 +43,6 @@ kafka:
       type: "PKCS12"
     key:
       password-config: "kenny"
-  consumer:
-    concurrency: 1
 
 management:
   security:

@@ -30,7 +30,10 @@ public abstract class AbstractIntegrationTest {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues
                     .of("kafka.bootstrap.servers=" + kafka.getBootstrapServers(),
-                            "kafka.ssl.enable=false",
+                            "kafka.ssl.enabled=false",
+                            "kafka.consumer.reconnect-backoff-ms=1000",
+                            "kafka.consumer.reconnect-backoff-max-ms=1000",
+                            "kafka.consumer.retry-backoff-ms=1000",
                             "operations.preAggregationPeriod=600000")
                     .applyTo(configurableApplicationContext.getEnvironment());
         }
