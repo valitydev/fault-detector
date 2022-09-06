@@ -55,14 +55,17 @@ public class FaultDetectorIntegrationTest {
         services.add(serviceId);
         List<ServiceStatistics> statistics = faultDetectorService.getStatistics(services);
 
-        assertEquals(1, statistics == null ? 0 : statistics.size(), "The number of statistics items received is not equal to the expected " +
-                "number");
+        assertEquals(1, statistics == null ? 0 : statistics.size(),
+                "The number of statistics items received is not equal to the expected number");
 
         ServiceStatistics serviceStatistics = statistics.get(0);
 
-        assertEquals(100, serviceStatistics.getOperationsCount(), "The number of operations is not equal to expected");
-        assertEquals(80, serviceStatistics.getSuccessOperationsCount(), "The number of success operations is not equal to expected");
-        assertEquals(20, serviceStatistics.getErrorOperationsCount(), "The number of error operations is not equal to expected");
+        assertEquals(100, serviceStatistics.getOperationsCount(),
+                "The number of operations is not equal to expected");
+        assertEquals(80, serviceStatistics.getSuccessOperationsCount(),
+                "The number of success operations is not equal to expected");
+        assertEquals(20, serviceStatistics.getErrorOperationsCount(),
+                "The number of error operations is not equal to expected");
         String expectedFailureRate = "0.13";
         String receivedFailureRate = String.format(Locale.ENGLISH, "%(.2f", serviceStatistics.getFailureRate());
         assertEquals(expectedFailureRate, receivedFailureRate, "Failure rate is not equal to expected");
