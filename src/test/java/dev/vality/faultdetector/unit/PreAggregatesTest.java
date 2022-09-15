@@ -34,11 +34,16 @@ public class PreAggregatesTest {
 
         mergePreAggregates(lastPreAggregates, newPreAggregates);
 
-        assertEquals(11, lastPreAggregates.getOperationsCount(), "The count of operations in pre-aggregates is not equal to expected");
-        assertEquals(14, lastPreAggregates.getSuccessOperationsCount(), "The count of success operations in pre-aggregates is not equal to expected");
-        assertEquals(2, lastPreAggregates.getErrorOperationsCount(), "The count of error operations in pre-aggregates is not equal to expected");
-        assertEquals(1, lastPreAggregates.getRunningOperationsCount(), "The count of running operations in pre-aggregates is not equal to expected");
-        assertEquals(5, lastPreAggregates.getOvertimeOperationsCount(), "The count of overtime operations in pre-aggregates is not equal to expected");
+        assertEquals(11, lastPreAggregates.getOperationsCount(),
+                "The count of operations in pre-aggregates is not equal to expected");
+        assertEquals(14, lastPreAggregates.getSuccessOperationsCount(),
+                "The count of success operations in pre-aggregates is not equal to expected");
+        assertEquals(2, lastPreAggregates.getErrorOperationsCount(),
+                "The count of error operations in pre-aggregates is not equal to expected");
+        assertEquals(1, lastPreAggregates.getRunningOperationsCount(),
+                "The count of running operations in pre-aggregates is not equal to expected");
+        assertEquals(5, lastPreAggregates.getOvertimeOperationsCount(),
+                "The count of overtime operations in pre-aggregates is not equal to expected");
     }
 
     @Test

@@ -2,10 +2,12 @@ package dev.vality.faultdetector.config;
 
 import dev.vality.faultdetector.config.property.KafkaConsumerProperties;
 import dev.vality.faultdetector.data.ServiceOperation;
+import dev.vality.faultdetector.serializer.ServiceOperationSerializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +33,8 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
                 kafkaConsumerProperties.getReconnectBackoffMaxMs());
         configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
-
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ServiceOperationSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 

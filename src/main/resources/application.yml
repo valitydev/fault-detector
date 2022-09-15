@@ -10,18 +10,6 @@ spring:
     bootstrap-servers: "localhost:29092"
     admin:
       client-id: "fault-detector"
-      ssl:
-        trust-store-type: "PKCS12"
-        trust-store-location: "src/main/resources/cert/truststore.p12"
-        trust-store-password: "kenny12"
-        key-store-password: "kenny"
-        key-password: "kenny"
-        key-store-location: "src/main/resources/cert/keystore.p12"
-        key-store-type: "PKCS12"
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: dev.vality.faultdetector.serializer.ServiceOperationSerializer
-
     consumer:
       group-id: "fault-detector"
       max-poll-records: 300

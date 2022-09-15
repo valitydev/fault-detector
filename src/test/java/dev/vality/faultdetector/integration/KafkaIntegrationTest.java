@@ -35,7 +35,7 @@ public class KafkaIntegrationTest {
         Thread.sleep(1000);
         sendOperationHandler.handle(getErrorServiceEvent("2", "1"));
         Thread.sleep(45000);
-        assertEquals( 2, serviceOperations.getServicesCount(), "Count of operations not equal");
+        assertEquals(2, serviceOperations.getServicesCount(), "Count of operations not equal");
     }
 
     private ServiceOperation getStartServiceEvent(String serviceId, String operationId) {
