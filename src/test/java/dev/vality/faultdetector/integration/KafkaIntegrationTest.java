@@ -9,7 +9,7 @@ import dev.vality.faultdetector.services.FaultDetectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @KafkaSpringBootTest
 public class KafkaIntegrationTest {
@@ -35,7 +35,7 @@ public class KafkaIntegrationTest {
         Thread.sleep(1000);
         sendOperationHandler.handle(getErrorServiceEvent("2", "1"));
         Thread.sleep(45000);
-        assertEquals("Count of operations not equal", 2, serviceOperations.getServicesCount());
+        assertEquals( 2, serviceOperations.getServicesCount(), "Count of operations not equal");
     }
 
     private ServiceOperation getStartServiceEvent(String serviceId, String operationId) {

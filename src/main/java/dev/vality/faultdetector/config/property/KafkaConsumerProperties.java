@@ -9,13 +9,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "kafka.consumer")
 public class KafkaConsumerProperties {
 
-    private String clientId;
-    private String groupId;
-    private String topic;
-    private String maxPoolRecords;
-    private String fetchMinBytes;
-    private String fetchMaxWaitMs;
-    private int concurrency;
     private int reconnectBackoffMs;
     private int reconnectBackoffMaxMs;
     private int retryBackoffMs;

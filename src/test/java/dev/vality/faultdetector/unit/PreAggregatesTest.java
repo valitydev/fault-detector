@@ -1,7 +1,7 @@
 package dev.vality.faultdetector.unit;
 
 import dev.vality.faultdetector.data.PreAggregates;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 import static dev.vality.faultdetector.utils.TransformDataUtils.mergePreAggregates;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PreAggregatesTest {
 
@@ -34,16 +34,11 @@ public class PreAggregatesTest {
 
         mergePreAggregates(lastPreAggregates, newPreAggregates);
 
-        assertEquals("The count of operations in pre-aggregates is not equal to expected",
-                11, lastPreAggregates.getOperationsCount());
-        assertEquals("The count of success operations in pre-aggregates is not equal to expected",
-                14, lastPreAggregates.getSuccessOperationsCount());
-        assertEquals("The count of error operations in pre-aggregates is not equal to expected",
-                2, lastPreAggregates.getErrorOperationsCount());
-        assertEquals("The count of running operations in pre-aggregates is not equal to expected",
-                1, lastPreAggregates.getRunningOperationsCount());
-        assertEquals("The count of overtime operations in pre-aggregates is not equal to expected",
-                5, lastPreAggregates.getOvertimeOperationsCount());
+        assertEquals(11, lastPreAggregates.getOperationsCount(), "The count of operations in pre-aggregates is not equal to expected");
+        assertEquals(14, lastPreAggregates.getSuccessOperationsCount(), "The count of success operations in pre-aggregates is not equal to expected");
+        assertEquals(2, lastPreAggregates.getErrorOperationsCount(), "The count of error operations in pre-aggregates is not equal to expected");
+        assertEquals(1, lastPreAggregates.getRunningOperationsCount(), "The count of running operations in pre-aggregates is not equal to expected");
+        assertEquals(5, lastPreAggregates.getOvertimeOperationsCount(), "The count of overtime operations in pre-aggregates is not equal to expected");
     }
 
     @Test
@@ -57,8 +52,7 @@ public class PreAggregatesTest {
         String aggTimesString = preAggregatesSet.stream()
                 .map(agg -> agg.getAggregationTime().toString())
                 .collect(Collectors.joining());
-        assertEquals("The order of the preaggregates is not equal to the target",
-                "12345", aggTimesString);
+        assertEquals("12345", aggTimesString, "The order of the preaggregates is not equal to the target");
     }
 
     private PreAggregates getPreAggregates(Long aggregationTime) {

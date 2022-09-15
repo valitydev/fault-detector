@@ -23,7 +23,7 @@ spring:
       value-serializer: dev.vality.faultdetector.serializer.ServiceOperationSerializer
 
     consumer:
-      group-id: @project.name@
+      group-id: "fault-detector"
       max-poll-records: 300
       fetch-min-size: 1024
       fetch-max-wait: 1000
