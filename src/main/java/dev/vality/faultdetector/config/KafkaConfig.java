@@ -2,11 +2,13 @@ package dev.vality.faultdetector.config;
 
 import dev.vality.faultdetector.config.property.KafkaConsumerProperties;
 import dev.vality.faultdetector.data.ServiceOperation;
+import dev.vality.faultdetector.serializer.ServiceOperationDeserializer;
 import dev.vality.faultdetector.serializer.ServiceOperationSerializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +51,8 @@ public class KafkaConfig {
         props.put(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
                 kafkaConsumerProperties.getReconnectBackoffMaxMs());
         props.put(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ServiceOperationDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
@@ -60,6 +64,7 @@ public class KafkaConfig {
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(serviceOperationConsumerFactory(kafkaConsumerProperties));
         factory.setBatchListener(false);
+        factory.setConcurrency(kafkaProperties.getListener().getConcurrency());
         return factory;
     }
 

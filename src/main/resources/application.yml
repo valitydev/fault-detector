@@ -15,12 +15,13 @@ spring:
       max-poll-records: 300
       fetch-min-size: 1024
       fetch-max-wait: 1000
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: dev.vality.faultdetector.serializer.ServiceOperationDeserializer
       auto-offset-reset: earliest
     listener:
       concurrency: 1
-
+    properties:
+      reconnect-backoff-ms: 15000
+      reconnect-backoff-max-ms: 30000
+      retry-backoff-ms: 1000
 
 info:
   version: @project.version@
