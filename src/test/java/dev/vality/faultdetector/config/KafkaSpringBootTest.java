@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @KafkaTestcontainerSingleton(
         properties = {
-                "spring.kafka.consumer.topic=fault-detector",
                 "kafka.consumer.reconnect-backoff-ms=1000",
                 "kafka.consumer.reconnect-backoff-max-ms=1000",
                 "kafka.consumer.retry-backoff-ms=1000",

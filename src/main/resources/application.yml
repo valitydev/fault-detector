@@ -8,8 +8,7 @@ spring:
       enabled: always
   kafka:
     bootstrap-servers: "localhost:29092"
-    admin:
-      client-id: "fault-detector"
+    client-id: "fault-detector"
     consumer:
       group-id: "fault-detector"
       max-poll-records: 300
@@ -19,9 +18,9 @@ spring:
     listener:
       concurrency: 1
     properties:
-      reconnect-backoff-ms: 15000
-      reconnect-backoff-max-ms: 30000
-      retry-backoff-ms: 1000
+      reconnect.backoff.ms: 15000
+      reconnect.backoff.max.ms: 30000
+      retry.backoff.ms: 1000
 
 info:
   version: @project.version@
@@ -37,9 +36,6 @@ operations:
 kafka:
   consumer:
     topic: "fault-detector"
-    reconnect-backoff-ms: 15000
-    reconnect-backoff-max-ms: 30000
-    retry-backoff-ms: 1000
 
 management:
   security:

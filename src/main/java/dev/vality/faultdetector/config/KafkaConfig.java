@@ -29,10 +29,6 @@ public class KafkaConfig {
     public ProducerFactory<String, ServiceOperation> producerFactory(KafkaConsumerProperties kafkaConsumerProperties) {
         Map<String, Object> configProps = kafkaProperties.buildProducerProperties();
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
-        configProps.put(ProducerConfig.RECONNECT_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getReconnectBackoffMs());
-        configProps.put(ProducerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
-                kafkaConsumerProperties.getReconnectBackoffMaxMs());
-        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ServiceOperationSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
@@ -44,25 +40,18 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, ServiceOperation> serviceOperationConsumerFactory(
-            KafkaConsumerProperties kafkaConsumerProperties) {
+    public ConsumerFactory<String, ServiceOperation> serviceOperationConsumerFactory() {
         Map<String, Object> props = kafkaProperties.buildConsumerProperties();
-        props.put(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getReconnectBackoffMs());
-        props.put(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG,
-                kafkaConsumerProperties.getReconnectBackoffMaxMs());
-        props.put(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, kafkaConsumerProperties.getRetryBackoffMs());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ServiceOperationDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ServiceOperation> kafkaListenerContainerFactory(
-            KafkaConsumerProperties kafkaConsumerProperties
-    ) {
+    public ConcurrentKafkaListenerContainerFactory<String, ServiceOperation> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, ServiceOperation> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(serviceOperationConsumerFactory(kafkaConsumerProperties));
+        factory.setConsumerFactory(serviceOperationConsumerFactory());
         factory.setBatchListener(false);
         factory.setConcurrency(kafkaProperties.getListener().getConcurrency());
         return factory;
