@@ -26,7 +26,7 @@ public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public ProducerFactory<String, ServiceOperation> producerFactory(KafkaConsumerProperties kafkaConsumerProperties) {
+    public ProducerFactory<String, ServiceOperation> producerFactory() {
         Map<String, Object> configProps = kafkaProperties.buildProducerProperties();
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -35,8 +35,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, ServiceOperation> kafkaTemplate(KafkaConsumerProperties kafkaConsumerProperties) {
-        return new KafkaTemplate<>(producerFactory(kafkaConsumerProperties));
+    public KafkaTemplate<String, ServiceOperation> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
