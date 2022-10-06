@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static dev.vality.faultdetector.data.FaultDetectorData.getStartOperation;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 @KafkaSpringBootTest
@@ -55,20 +55,20 @@ public class FaultDetectorIntegrationTest {
         services.add(serviceId);
         List<ServiceStatistics> statistics = faultDetectorService.getStatistics(services);
 
-        assertEquals("The number of statistics items received is not equal to the expected " +
-                "number", 1, statistics == null ? 0 : statistics.size());
+        assertEquals(1, statistics == null ? 0 : statistics.size(),
+                "The number of statistics items received is not equal to the expected number");
 
         ServiceStatistics serviceStatistics = statistics.get(0);
 
-        assertEquals("The number of operations is not equal to expected",
-                100, serviceStatistics.getOperationsCount());
-        assertEquals("The number of success operations is not equal to expected",
-                80, serviceStatistics.getSuccessOperationsCount());
-        assertEquals("The number of error operations is not equal to expected",
-                20, serviceStatistics.getErrorOperationsCount());
+        assertEquals(100, serviceStatistics.getOperationsCount(),
+                "The number of operations is not equal to expected");
+        assertEquals(80, serviceStatistics.getSuccessOperationsCount(),
+                "The number of success operations is not equal to expected");
+        assertEquals(20, serviceStatistics.getErrorOperationsCount(),
+                "The number of error operations is not equal to expected");
         String expectedFailureRate = "0.13";
         String receivedFailureRate = String.format(Locale.ENGLISH, "%(.2f", serviceStatistics.getFailureRate());
-        assertEquals("Failure rate is not equal to expected", expectedFailureRate, receivedFailureRate);
+        assertEquals(expectedFailureRate, receivedFailureRate, "Failure rate is not equal to expected");
 
     }
 
