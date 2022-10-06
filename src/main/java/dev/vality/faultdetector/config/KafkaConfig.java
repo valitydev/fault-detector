@@ -1,6 +1,5 @@
 package dev.vality.faultdetector.config;
 
-import dev.vality.faultdetector.config.property.KafkaConsumerProperties;
 import dev.vality.faultdetector.data.ServiceOperation;
 import dev.vality.faultdetector.serializer.ServiceOperationDeserializer;
 import dev.vality.faultdetector.serializer.ServiceOperationSerializer;
