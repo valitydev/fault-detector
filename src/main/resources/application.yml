@@ -1,8 +1,8 @@
 server:
-  port: @server.port@
+  port: "${server.port}"
 spring:
   application:
-    name: @project.name@
+    name: "${project.name}"
   output:
     ansi:
       enabled: always
@@ -23,7 +23,7 @@ spring:
       retry.backoff.ms: 1000
 
 info:
-  version: @project.version@
+  version: "${project.version}"
   stage: dev
 
 operations:
@@ -41,11 +41,7 @@ management:
   security:
     flag: false
   server:
-    port: '@management.port@'
-  metrics:
-    export:
-      prometheus:
-        enabled: true
+    port: "${management.port}"
   endpoint:
     health:
       show-details: always
@@ -57,3 +53,7 @@ management:
     web:
       exposure:
         include: health,info,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
