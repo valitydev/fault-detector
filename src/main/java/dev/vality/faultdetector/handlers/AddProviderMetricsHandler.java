@@ -3,8 +3,7 @@ package dev.vality.faultdetector.handlers;
 import dev.vality.faultdetector.binders.FaultDetectorMetricsBinder;
 import dev.vality.faultdetector.data.ServiceAggregates;
 import io.micrometer.core.instrument.Gauge;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "management.metrics.export.prometheus.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "management.prometheus.metrics.export.enabled", havingValue = "true")
 public class AddProviderMetricsHandler implements Handler<String> {
 
     private final Map<String, ServiceAggregates> aggregatesMap;
@@ -41,5 +40,4 @@ public class AddProviderMetricsHandler implements Handler<String> {
                 serviceId, serviceMetersMap.size(), prometheusMeterRegistry.getMeters().size(),
                 prometheusMeterRegistry.config());
     }
-
 }
