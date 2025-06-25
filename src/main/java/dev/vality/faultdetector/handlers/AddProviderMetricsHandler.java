@@ -3,7 +3,7 @@ package dev.vality.faultdetector.handlers;
 import dev.vality.faultdetector.binders.FaultDetectorMetricsBinder;
 import dev.vality.faultdetector.data.ServiceAggregates;
 import io.micrometer.core.instrument.Gauge;
-import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,12 +17,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "management.prometheus.metrics.export.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "service.metrics.enabled", havingValue = "true")
 public class AddProviderMetricsHandler implements Handler<String> {
 
     private final Map<String, ServiceAggregates> aggregatesMap;
 
-    private final PrometheusMeterRegistry prometheusMeterRegistry;
+    private final MeterRegistry meterRegistry;
 
     private final Map<String, List<Gauge>> serviceMetersMap = new ConcurrentHashMap<>();
 
@@ -33,11 +33,11 @@ public class AddProviderMetricsHandler implements Handler<String> {
         log.warn("Add gauge metrics for the service {} get started", serviceId);
         FaultDetectorMetricsBinder faultDetectorMetricsBinder =
                 new FaultDetectorMetricsBinder(aggregatesMap, serviceId);
-        faultDetectorMetricsBinder.bindTo(prometheusMeterRegistry);
+        faultDetectorMetricsBinder.bindTo(meterRegistry);
         meters.add(faultDetectorMetricsBinder);
         log.debug("Gauge metrics for the service {} was added. Service meter map size is {}. " +
                         "Registry meter size is {}. Meter registry config: {}",
-                serviceId, serviceMetersMap.size(), prometheusMeterRegistry.getMeters().size(),
-                prometheusMeterRegistry.config());
+                serviceId, serviceMetersMap.size(), meterRegistry.getMeters().size(),
+                meterRegistry.config());
     }
 }
