@@ -26,6 +26,10 @@ info:
   version: "${project.version}"
   stage: dev
 
+service:
+  metrics:
+    enabled: true
+
 operations:
   preAggregationPeriod: 3000
   useServiceConfigPreAggregationPeriod: false

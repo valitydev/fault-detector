@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "management.metrics.export.prometheus.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "service.metrics.enabled", havingValue = "true")
 public class FaultDetectorMetricsService {
 
     private final Map<String, ServiceAggregates> aggregatesMap;
